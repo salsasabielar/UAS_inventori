@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "995274347293",
+    "project_id": "aplikasi-inventori",
+    "storage_bucket": "aplikasi-inventori.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995274347293:android:fce72ddaa02aee441307f4",
+        "android_client_info": {
+          "package_name": "com.example.inventori"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995274347293-oog0affp38fenma0rhv2itqa8s254a6c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.inventori",
+            "certificate_hash": "30c76737f8d5354922354c821fda5b8dd0d65446"
+          }
+        },
+        {
+          "client_id": "995274347293-ql574800p9qapn9khnh38kd97qbipi8p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhlStO_F0_SxaGev1K4MsnAvUwc2oxieE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995274347293-ql574800p9qapn9khnh38kd97qbipi8p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
