@@ -98,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   onPressed: () async {
-                    signIn(emailController.text, passwordController.text).then(
+                    signUp(emailController.text, passwordController.text).then(
                       (result) {
                         if (result != null) {
                           Navigator.of(context).push(

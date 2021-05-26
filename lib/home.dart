@@ -31,11 +31,11 @@ class _HomePageState extends State<HomePage> {
                 child: RaisedButton(
                   color: Colors.teal[600],
                   child: Text(
-                    'Login',
+                    'Sign In',
                     textScaleFactor: 1.5,
                     style: TextStyle(
                       color: Colors.white70,
-                    ), 
+                    ),
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 child: RaisedButton(
                   color: Colors.teal[600],
                   child: Text(
-                    'Register',
+                    'Sign Up',
                     textScaleFactor: 1.5,
                     style: TextStyle(
                       color: Colors.white70,
