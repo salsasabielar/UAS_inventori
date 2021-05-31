@@ -10,6 +10,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   bool _isHidePassword = true;
 
@@ -39,6 +40,22 @@ class _RegisterPageState extends State<RegisterPage> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
+              child: TextField(
+                controller: nameController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(40.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  //
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30, top: 8, right: 30),
               child: TextField(
                 controller: emailController,
                 keyboardType: TextInputType.text,
@@ -98,7 +115,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   onPressed: () async {
-                    signUp(emailController.text, passwordController.text).then(
+                    signUp(emailController.text, passwordController.text,
+                            nameController.text)
+                        .then(
                       (result) {
                         if (result != null) {
                           Navigator.of(context).push(
@@ -112,6 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                     );
                   },
+                  elevation: 8,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
                 ),

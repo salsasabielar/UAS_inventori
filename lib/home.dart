@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white70,
                     ),
                   ),
+                  elevation: 8,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
                   onPressed: () {
@@ -58,8 +59,9 @@ class _HomePageState extends State<HomePage> {
                     textScaleFactor: 1.5,
                     style: TextStyle(
                       color: Colors.white70,
-                    ), //2F8A6C
+                    ),
                   ),
+                  elevation: 8,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
                   onPressed: () {
