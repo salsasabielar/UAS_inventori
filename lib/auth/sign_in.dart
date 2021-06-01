@@ -29,7 +29,7 @@ Future<User> signIn(String email, String password) async {
   return null;
 }
 
-Future<String> signUp(String emailInput, String password, String name) async {
+Future<String> signUp(String emailInput, String password) async {
   await Firebase.initializeApp();
   try {
     // UserCredential userCredential = await FirebaseAuth.instance
@@ -51,7 +51,7 @@ Future<String> signUp(String emailInput, String password, String name) async {
     if (e.code == 'user-not-found') {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailInput, password: password);
-      return await signUp(emailInput, password, name);
+      return await signUp(emailInput, password);
     } else if (e.code == 'wrong-password') {
       print('Wrong password provided for that user.');
       return null;
@@ -59,4 +59,3 @@ Future<String> signUp(String emailInput, String password, String name) async {
   }
   return null;
 }
-

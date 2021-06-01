@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:inventori/auth/login.dart';
 import 'package:inventori/auth/sign_in.dart';
 
-class RegisterPage extends StatefulWidget {
+class SearchPage extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _SearchPageState createState() => _SearchPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _SearchPageState extends State<SearchPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  //TextEditingController nameController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   bool _isHidePassword = true;
 
@@ -38,22 +38,22 @@ class _RegisterPageState extends State<RegisterPage> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 30, right: 30),
-            //   child: TextField(
-            //     controller: nameController,
-            //     keyboardType: TextInputType.text,
-            //     decoration: InputDecoration(
-            //       labelText: 'Username',
-            //       border: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(40.0),
-            //       ),
-            //     ),
-            //     onChanged: (value) {
-            //       //
-            //     },
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              child: TextField(
+                controller: nameController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(40.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  //
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 30, top: 8, right: 30),
               child: TextField(

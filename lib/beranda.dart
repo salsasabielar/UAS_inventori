@@ -1,8 +1,11 @@
 // Copyright (c) 2019 Souvik Biswas
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inventori/auth/login.dart';
+import 'package:inventori/FirstScreen.dart';
 import 'package:inventori/auth/sign_in.dart';
+import 'package:inventori/cari.dart';
+import 'package:inventori/formBarang.dart';
+import 'package:inventori/formKategori.dart';
 import 'package:inventori/home.dart';
 
 class SecondScreen extends StatelessWidget {
@@ -37,30 +40,51 @@ class SecondScreen extends StatelessWidget {
               ),
             ),
             ListTile(
+              leading: Icon(Icons.home),
+              title: Text("Beranda"),
+              onTap: () {
+                // Change the applications state
+                print("Beranda");
+                //Navigator.pop(context);
+                // Navigator.push(context,
+                //         MaterialPageRoute(builder: (context) => FirstScreen()));
+                // Navigator.of(context).pop(
+                //   MaterialPageRoute(
+                //     builder: (context) {
+                //       return FirstScreen();
+                //     },
+                //   ),
+                // );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.inventory),
+              title: Text("Barang"),
+              onTap: () {
+                // Change the applications state
+                print("Barang");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FormBarang()));
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.category),
               title: Text("Kategori"),
               onTap: () {
                 // Change the applications state
                 print("Kategori");
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FormKategori()));
               },
             ),
             ListTile(
-              leading: Icon(Icons.ac_unit),
-              title: Text("AC"),
+              leading: Icon(Icons.search),
+              title: Text("Cari"),
               onTap: () {
                 // Change the applications state
-                print("Change page");
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.directions_bike),
-              title: Text("Bike"),
-              onTap: () {
-                // Change the applications state
-                print("SIlahkan Pindah Halaman");
-                Navigator.pop(context);
+                print("Cari");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchPage()));
               },
             ),
             Divider(
@@ -86,7 +110,7 @@ class SecondScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.teal[600], Colors.teal[300]],
+            colors: [Colors.teal[600], Colors.teal[200]],
           ),
         ),
         child: Center(
