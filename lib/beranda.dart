@@ -1,13 +1,15 @@
 // Copyright (c) 2019 Souvik Biswas
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inventori/FirstScreen.dart';
 import 'package:inventori/auth/sign_in.dart';
+import 'package:inventori/barang.dart';
 import 'package:inventori/cari.dart';
 import 'package:inventori/formBarang.dart';
 import 'package:inventori/formKategori.dart';
 import 'package:inventori/home.dart';
+import 'package:inventori/kategori.dart';
 
+// ignore: must_be_immutable
 class SecondScreen extends StatelessWidget {
   FirebaseAuth _auth = FirebaseAuth.instance;
   @override
@@ -45,16 +47,8 @@ class SecondScreen extends StatelessWidget {
               onTap: () {
                 // Change the applications state
                 print("Beranda");
-                //Navigator.pop(context);
-                // Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => FirstScreen()));
-                // Navigator.of(context).pop(
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return FirstScreen();
-                //     },
-                //   ),
-                // );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SecondScreen()));
               },
             ),
             ListTile(
@@ -64,7 +58,7 @@ class SecondScreen extends StatelessWidget {
                 // Change the applications state
                 print("Barang");
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FormBarang()));
+                    MaterialPageRoute(builder: (context) => BarangPage()));
               },
             ),
             ListTile(
@@ -74,7 +68,7 @@ class SecondScreen extends StatelessWidget {
                 // Change the applications state
                 print("Kategori");
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FormKategori()));
+                    MaterialPageRoute(builder: (context) => KategoriPage()));
               },
             ),
             ListTile(
@@ -88,7 +82,7 @@ class SecondScreen extends StatelessWidget {
               },
             ),
             Divider(
-              height: 2.0,
+              height: 5.0,
               color: Colors.teal[600],
             ),
             ListTile(

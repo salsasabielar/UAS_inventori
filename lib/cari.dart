@@ -1,141 +1,126 @@
+// Copyright (c) 2019 Souvik Biswas
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inventori/auth/login.dart';
 import 'package:inventori/auth/sign_in.dart';
+import 'package:inventori/beranda.dart';
+import 'package:inventori/formBarang.dart';
+import 'package:inventori/formKategori.dart';
+import 'package:inventori/home.dart';
+import 'package:inventori/kategori.dart';
 
-class SearchPage extends StatefulWidget {
-  @override
-  _SearchPageState createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-
-  bool _isHidePassword = true;
-
-  void _togglePasswordVisibility() {
-    setState(() {
-      _isHidePassword = !_isHidePassword;
-    });
-  }
-
+// ignore: must_be_immutable
+class SearchPage extends StatelessWidget {
+  FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
-        backgroundColor: Colors.teal[600],
+        backgroundColor: Colors.teal[500],
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            // ignore: missing_required_param
+            UserAccountsDrawerHeader(
+              accountEmail: Text(
+                _auth.currentUser.email,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor:
+                    Theme.of(context).platform == TargetPlatform.iOS
+                        ? Colors.teal[500]
+                        : Colors.white,
+                child: Icon(
+                  Icons.people,
+                  color: Colors.teal[500],
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.teal[500],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("Beranda"),
+              onTap: () {
+                // Change the applications state
+                print("Beranda");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SecondScreen()));
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.inventory),
+              title: Text("Barang"),
+              onTap: () {
+                // Change the applications state
+                print("Barang");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FormBarang()));
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.category),
+              title: Text("Kategori"),
+              onTap: () {
+                // Change the applications state
+                print("Kategori");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => KategoriPage()));
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.search),
+              title: Text("Cari"),
+              onTap: () {
+                // Change the applications state
+                print("Cari");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchPage()));
+              },
+            ),
+            Divider(
+              height: 5.0,
+              color: Colors.teal[600],
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text("Sign Out"),
+              onTap: () {
+                signOutEmail();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) {
+                  return HomePage();
+                }), ModalRoute.withName('/'));
+              },
+            ),
+          ],
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/img1.png'),
-            fit: BoxFit.cover,
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Colors.teal[600], Colors.teal[200]],
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: TextField(
-                controller: nameController,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40.0),
-                  ),
-                ),
-                onChanged: (value) {
-                  //
-                },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Text(
+                //'LOGIN SUCCESS',
+                _auth.currentUser.email,
+                style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, top: 8, right: 30),
-              child: TextField(
-                controller: emailController,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40.0),
-                  ),
-                ),
-                onChanged: (value) {
-                  //
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(30, 8, 30, 8),
-              child: TextFormField(
-                controller: passwordController,
-                obscureText: _isHidePassword,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(40.0)),
-                  labelText: 'Password',
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      _togglePasswordVisibility();
-                    },
-                    child: Icon(
-                      _isHidePassword ? Icons.visibility_off : Icons.visibility,
-                      color: _isHidePassword ? Colors.white : Colors.white,
-                    ),
-                  ),
-                  filled: true,
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter Password';
-                  } else if (value.length < 6) {
-                    return 'Password must be at least 6 characters!';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(30, 40, 30, 170),
-              child: Container(
-                width: double.infinity,
-                height: 55,
-                child: RaisedButton(
-                  color: Colors.teal[600],
-                  child: Text(
-                    'Sign Up',
-                    textScaleFactor: 1.5,
-                    style: TextStyle(
-                      color: Colors.white70,
-                    ),
-                  ),
-                  onPressed: () async {
-                    signUp(emailController.text, passwordController.text).then(
-                      (result) {
-                        if (result != null) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return LoginPage();
-                              },
-                            ),
-                          );
-                        }
-                      },
-                    );
-                  },
-                  elevation: 8,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

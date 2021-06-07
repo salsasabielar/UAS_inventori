@@ -1,36 +1,118 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:inventori/auth/sign_in.dart';
+import 'package:inventori/barang.dart';
+import 'package:inventori/beranda.dart';
+import 'package:inventori/cari.dart';
+import 'package:inventori/formBarang.dart';
+import 'package:inventori/home.dart';
+import 'package:inventori/kategori.dart';
 
 class FormKategori extends StatefulWidget {
-  // final Item item;
-  // EntryForm(this.item);
-
   @override
   FormKategoriState createState() => FormKategoriState();
 }
 
-//class controller
 class FormKategoriState extends State<FormKategori> {
-  //Item item;
-  //EntryFormState(this.item);
-  TextEditingController nameController = TextEditingController();
-  TextEditingController kodeController = TextEditingController();
+  final TextEditingController kategoriController = TextEditingController();
+  final TextEditingController kodeController = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  CollectionReference _kategori =
+      FirebaseFirestore.instance.collection('kategori');
+
+  void clearInputText() {
+    kodeController.text = "";
+    kategoriController.text = "";
+  }
 
   @override
   Widget build(BuildContext context) {
-    // //kondisi
-    // if (item != null) {
-    //   kodeController.text = item.kode;
-    //   rasController.text = item.ras;
-    //   nameController.text = item.name;
-    //   jenisKelaminController.text = item.jenisKelamin;
-    // }
-    //rubah
     return Scaffold(
         appBar: AppBar(
-          // title: item == null ? Text('Tambah') : Text('Ubah'),
-          // leading: Icon(Icons.keyboard_arrow_left),
           title: Text('Kategori'),
-          backgroundColor: Colors.teal[600],
+          backgroundColor: Colors.teal[500],
+        ),
+        drawer: Drawer(
+          child: Column(
+            children: <Widget>[
+              // ignore: missing_required_param
+              UserAccountsDrawerHeader(
+                accountEmail: Text(
+                  _auth.currentUser.email,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor:
+                      Theme.of(context).platform == TargetPlatform.iOS
+                          ? Colors.teal[500]
+                          : Colors.white,
+                  child: Icon(
+                    Icons.people,
+                    color: Colors.teal[500],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.teal[500],
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text("Beranda"),
+                onTap: () {
+                  // Change the applications state
+                  print("Beranda");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SecondScreen()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.inventory),
+                title: Text("Barang"),
+                onTap: () {
+                  // Change the applications state
+                  print("Barang");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BarangPage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.category),
+                title: Text("Kategori"),
+                onTap: () {
+                  // Change the applications state
+                  print("Kategori");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => KategoriPage()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.search),
+                title: Text("Cari"),
+                onTap: () {
+                  // Change the applications state
+                  print("Cari");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchPage()));
+                },
+              ),
+              Divider(
+                height: 5.0,
+                color: Colors.teal[600],
+              ),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text("Sign Out"),
+                onTap: () {
+                  signOutEmail();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) {
+                    return HomePage();
+                  }), ModalRoute.withName('/'));
+                },
+              ),
+            ],
+          ),
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -44,7 +126,7 @@ class FormKategoriState extends State<FormKategori> {
             padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
             child: ListView(
               children: <Widget>[
-                // Kode K
+                // Kode Kategori
                 Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: TextField(
@@ -62,11 +144,11 @@ class FormKategoriState extends State<FormKategori> {
                   ),
                 ),
 
-                // nama
+                // kategori
                 Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: TextField(
-                    controller: nameController,
+                    controller: kategoriController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Nama Kategori',
@@ -94,22 +176,12 @@ class FormKategoriState extends State<FormKategori> {
                             'Save',
                             textScaleFactor: 1.5,
                           ),
-                          onPressed: () {
-                            // if (item == null) {
-                            //   // tambah data
-                            //   item = Item(
-                            //       kodeController.text,
-                            //       rasController.text,
-                            //       nameController.text,
-                            //       jenisKelaminController.text);
-                            // } else {
-                            //   // ubah data
-                            //   item.kode = kodeController.text;
-                            //   item.ras = rasController.text;
-                            //   item.name = nameController.text;
-                            //   item.jenisKelamin = jenisKelaminController.text;
-                            // }
-                            // kembali ke layar sebelumnya dengan membawa objek item
+                          onPressed: () async {
+                            await _kategori.add({
+                              "kode": kodeController.text,
+                              "kategori": kategoriController.text,
+                            });
+                            clearInputText();
                             Navigator.pop(context);
                           },
                         ),

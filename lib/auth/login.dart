@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inventori/FirstScreen.dart';
 import 'package:inventori/beranda.dart';
 import 'package:inventori/auth/register.dart';
 import 'package:inventori/auth/sign_in.dart';
