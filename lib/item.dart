@@ -48,7 +48,7 @@ class ItemCard extends StatelessWidget {
                     fontSize: 14),
               ),
               Text(
-                jumlahBarang.toStringAsFixed(0),
+                '$jumlahBarang',
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,

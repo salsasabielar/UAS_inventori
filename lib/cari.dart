@@ -3,8 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:inventori/auth/sign_in.dart';
 import 'package:inventori/beranda.dart';
-import 'package:inventori/formBarang.dart';
-import 'package:inventori/formKategori.dart';
+import 'package:inventori/form/formBarang.dart';
 import 'package:inventori/home.dart';
 import 'package:inventori/kategori.dart';
 

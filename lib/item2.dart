@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventori/form/formKategori.dart';
 
 class ItemCard2 extends StatelessWidget {
   final String kode;
@@ -59,6 +60,8 @@ class ItemCard2 extends StatelessWidget {
                     )),
                     onPressed: () {
                       // if (onUpdate != null) onUpdate!();
+                      Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FormKategori()));
                       onUpdate();
                     }),
               ),

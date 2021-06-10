@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:inventori/auth/sign_in.dart';
 import 'package:inventori/beranda.dart';
 import 'package:inventori/cari.dart';
-import 'package:inventori/formKategori.dart';
 import 'package:inventori/home.dart';
 import 'package:inventori/kategori.dart';
 
