@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:inventori/barang/utils/database.dart';
+import 'package:inventori/kategori/utils/database.dart';
 
 class AddItemForm extends StatefulWidget {
   final FocusNode kodeFocusNode;
@@ -22,20 +24,21 @@ class AddItemForm extends StatefulWidget {
 
 class _AddItemFormState extends State<AddItemForm> {
   final _addItemFormKey = GlobalKey<FormState>();
-
   bool _isProcessing = false;
-
   final TextEditingController _kodeController = TextEditingController();
   final TextEditingController _namaBarangController = TextEditingController();
   final TextEditingController _jumlahBarangController = TextEditingController();
   final TextEditingController _kondisiController = TextEditingController();
   final TextEditingController _kategoriController = TextEditingController();
+  String dropdownValue = '-';
+  bool status = false;
+  var selectedCurrency;
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _addItemFormKey,
-      child: Column(
+      child: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 24.0),
@@ -52,8 +55,11 @@ class _AddItemFormState extends State<AddItemForm> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Kode Barang',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
+                        borderSide: new BorderSide(color: Colors.white),
                       ),
                     ),
                     onChanged: (value) {
@@ -69,6 +75,8 @@ class _AddItemFormState extends State<AddItemForm> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Nama Barang',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -85,6 +93,8 @@ class _AddItemFormState extends State<AddItemForm> {
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Jumlah Barang',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -101,6 +111,8 @@ class _AddItemFormState extends State<AddItemForm> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Kondisi Barang',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -110,21 +122,84 @@ class _AddItemFormState extends State<AddItemForm> {
                     },
                   ),
                 ),
+
+                // DropdownButton<String>(
+                //   value: dropdownValue,
+                //   icon: const Icon(Icons.arrow_downward),
+                //   iconSize: 24,
+                //   elevation: 16,
+                //   style: const TextStyle(color: Colors.deepPurple),
+                //   underline: Container(
+                //     height: 2,
+                //     color: Colors.deepPurpleAccent,
+                //   ),
+                //   onChanged: (String newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue;
+                //       status = true;
+                //     });
+                //   },
+                //   items: <String>['-', 'Baru', 'Perlu Perbaikan', 'Rusak']
+                //       .map<DropdownMenuItem<String>>((String value) {
+                //     return DropdownMenuItem<String>(
+                //       value: value,
+                //       child: Text(value),
+                //     );
+                //   }).toList(),
+                // ),
+
                 Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  child: TextField(
-                    controller: _kategoriController,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      labelText: 'Kategori Barang',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onChanged: (value) {
-                      //
-                    },
-                  ),
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: DatabaseKategori.readItems(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData)
+                          const Text("Loading.....");
+                        else {
+                          List<DropdownMenuItem> currencyItems = [];
+                          for (int i = 0; i < snapshot.data.docs.length; i++) {
+                            var snap = snapshot.data.docs[i].data();
+                            String nama = snap['kategori'];
+                            currencyItems.add(
+                              DropdownMenuItem(
+                                child: Text(
+                                  nama,
+                                  style: TextStyle(color: Colors.black45),
+                                ),
+                                value: "${nama}",
+                              ),
+                            );
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(width: 50.0),
+                              DropdownButton(
+                                items: currencyItems,
+                                onChanged: (currencyValue) {
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                      'Selected Currency value is $currencyValue',
+                                      style:
+                                          TextStyle(color: Colors.black45),
+                                    ),
+                                  );
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                  setState(() {
+                                    selectedCurrency = currencyValue;
+                                  });
+                                },
+                                value: selectedCurrency,
+                                isExpanded: false,
+                                hint: new Text(
+                                  "Choose Currency Type",
+                                  style: TextStyle(color: Colors.black45),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      }),
                 ),
               ],
             ),
@@ -145,6 +220,9 @@ class _AddItemFormState extends State<AddItemForm> {
                     textColor: Theme.of(context).primaryColorLight,
                     onPressed: () async {
                       widget.kodeFocusNode.unfocus();
+                      widget.namaBarangFocusNode.unfocus();
+                      widget.jumlahBarangFocusNode.unfocus();
+                      widget.kondisiFocusNode.unfocus();
                       widget.kategoriFocusNode.unfocus();
 
                       if (_addItemFormKey.currentState.validate()) {
@@ -157,7 +235,7 @@ class _AddItemFormState extends State<AddItemForm> {
                           namaBarang: _namaBarangController.text,
                           jumlahBarang: int.parse(_jumlahBarangController.text),
                           kondisi: _kondisiController.text,
-                          kategori: _kategoriController.text,
+                          kategori: selectedCurrency,
                         );
 
                         setState(() {
@@ -175,7 +253,6 @@ class _AddItemFormState extends State<AddItemForm> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          // color: CustomColors.firebaseGrey,
                           letterSpacing: 2,
                         ),
                       ),

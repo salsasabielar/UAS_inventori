@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:inventori/barang/utils/database.dart';
+import 'package:inventori/kategori/utils/database.dart';
 
 class EditItemForm extends StatefulWidget {
   final FocusNode kodeFocusNode;
@@ -42,6 +44,7 @@ class _EditItemFormState extends State<EditItemForm> {
   TextEditingController _jumlahBarangController;
   TextEditingController _kondisiController;
   TextEditingController _kategoriController;
+  var selectedCurrency;
 
   @override
   void initState() {
@@ -67,7 +70,7 @@ class _EditItemFormState extends State<EditItemForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _editItemFormKey,
-      child: Column(
+      child: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 24.0),
@@ -82,6 +85,8 @@ class _EditItemFormState extends State<EditItemForm> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Kode Barang',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -98,6 +103,8 @@ class _EditItemFormState extends State<EditItemForm> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Nama Barang',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -114,6 +121,8 @@ class _EditItemFormState extends State<EditItemForm> {
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Jumlah Barang',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -130,6 +139,8 @@ class _EditItemFormState extends State<EditItemForm> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Kondisi Barang',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -141,19 +152,55 @@ class _EditItemFormState extends State<EditItemForm> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  child: TextField(
-                    controller: _kategoriController,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      labelText: 'Kategori Barang',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onChanged: (value) {
-                      //
-                    },
-                  ),
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: DatabaseKategori.readItems(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData)
+                          const Text("Loading.....");
+                        else {
+                          List<DropdownMenuItem> currencyItems = [];
+                          for (int i = 0; i < snapshot.data.docs.length; i++) {
+                            var snap = snapshot.data.docs[i].data();
+                            String nama = snap['kategori'];
+                            currencyItems.add(
+                              DropdownMenuItem(
+                                child: Text(
+                                  nama,
+                                  style: TextStyle(color: Colors.black45),
+                                ),
+                                value: "${nama}",
+                              ),
+                            );
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(width: 50.0),
+                              DropdownButton(
+                                items: currencyItems,
+                                onChanged: (currencyValue) {
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                      'Selected Currency value is $currencyValue',
+                                      style: TextStyle(color: Colors.black45),
+                                    ),
+                                  );
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                  setState(() {
+                                    selectedCurrency = currencyValue;
+                                  });
+                                },
+                                value: selectedCurrency,
+                                isExpanded: false,
+                                hint: new Text(
+                                  "Choose Currency Type",
+                                  style: TextStyle(color: Colors.black45),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      }),
                 ),
               ],
             ),
@@ -190,7 +237,7 @@ class _EditItemFormState extends State<EditItemForm> {
                           namaBarang: _namaBarangController.text,
                           jumlahBarang: int.parse(_jumlahBarangController.text),
                           kondisi: _kondisiController.text,
-                          kategori: _kategoriController.text,
+                          kategori: selectedCurrency,
                         );
 
                         setState(() {

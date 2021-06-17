@@ -64,7 +64,7 @@ class _EditScreenState extends State<EditScreen> {
                         _isDeleting = true;
                       });
 
-                      await Database.deleteItem(
+                      await DatabaseKategori.deleteItem(
                         docId: widget.documentId,
                       );
 

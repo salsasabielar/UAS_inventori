@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inventori/kategori/utils/database.dart';
-import 'package:inventori/kategori/widgets/custom_form_field.dart';
 
 class AddItemForm extends StatefulWidget {
   final FocusNode kodeFocusNode;
@@ -35,17 +34,6 @@ class _AddItemFormState extends State<AddItemForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 24.0),
-                // Text(
-                //   'Kode Kategori',
-                //   style: TextStyle(
-                //     // color: CustomColors.firebaseGrey,
-                //     fontSize: 20.0,
-                //     //letterSpacing: 1,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                //SizedBox(height: 8.0),
-                // Kode Kategori
                 Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: TextField(
@@ -53,6 +41,8 @@ class _AddItemFormState extends State<AddItemForm> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Kode Kategori',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -62,28 +52,6 @@ class _AddItemFormState extends State<AddItemForm> {
                     },
                   ),
                 ),
-                // CustomFormField(
-                //   isLabelEnabled: false,
-                //   controller: _kodeController,
-                //   focusNode: widget.kodeFocusNode,
-                //   keyboardType: TextInputType.text,
-                //   inputAction: TextInputAction.next,
-                //   // validator: (value) => Validator.validateField(
-                //   //   value: value,
-                //   // ),
-                //   label: 'Title',
-                //   hint: 'Enter your kode here',
-                // ),
-                // kategori
-                // Text(
-                //   'Nama Kategori',
-                //   style: TextStyle(
-                //     //color: CustomColors.firebaseGrey,
-                //     fontSize: 20.0,
-                //     //letterSpacing: 1,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: TextField(
@@ -91,6 +59,8 @@ class _AddItemFormState extends State<AddItemForm> {
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       labelText: 'Nama Kategori',
+                      labelStyle:
+                          new TextStyle(color: Colors.black54, fontSize: 16.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -100,22 +70,6 @@ class _AddItemFormState extends State<AddItemForm> {
                     },
                   ),
                 ),
-                // SizedBox(height: 24.0),
-
-                // SizedBox(height: 8.0),
-                // CustomFormField(
-                //   maxLines: 10,
-                //   isLabelEnabled: false,
-                //   controller: _kategoriController,
-                //   focusNode: widget.kategoriFocusNode,
-                //   keyboardType: TextInputType.text,
-                //   inputAction: TextInputAction.done,
-                //   // validator: (value) => Validator.validateField(
-                //   //   value: value,
-                //   // ),
-                //   label: 'Kategori',
-                //   hint: 'Enter your kategori here',
-                // ),
               ],
             ),
           ),
@@ -142,7 +96,7 @@ class _AddItemFormState extends State<AddItemForm> {
                           _isProcessing = true;
                         });
 
-                        await Database.addItem(
+                        await DatabaseKategori.addItem(
                           kode: _kodeController.text,
                           kategori: _kategoriController.text,
                         );

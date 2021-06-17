@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:inventori/auth/sign_in.dart';
 import 'package:inventori/barang.dart';
 import 'package:inventori/beranda.dart';
-import 'package:inventori/cari.dart';
 import 'package:inventori/home.dart';
 import 'package:inventori/kategori.dart';
 
@@ -85,16 +84,7 @@ class FormKategoriState extends State<FormKategori> {
                       MaterialPageRoute(builder: (context) => KategoriPage()));
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.search),
-                title: Text("Cari"),
-                onTap: () {
-                  // Change the applications state
-                  print("Cari");
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchPage()));
-                },
-              ),
+              
               Divider(
                 height: 5.0,
                 color: Colors.teal[600],

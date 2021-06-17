@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _mainCollection = _firestore.collection('kategori');
 
-class Database {
+class DatabaseKategori {
   static String userUid;
 
   static Future<void> addItem({

@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.fromLTRB(30, 40, 30, 15),
               child: Container(
                 width: double.infinity,
-                height: 50,
+                height: 55,
                 child: RaisedButton(
                   color: Colors.teal[600],
                   child: Text(
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.fromLTRB(30, 15, 30, 70),
               child: Container(
                 width: double.infinity,
-                height: 50,
+                height: 55,
                 child: RaisedButton(
                   color: Colors.teal[600],
                   child: Text(

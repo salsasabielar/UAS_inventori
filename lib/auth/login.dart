@@ -45,6 +45,8 @@ class _LoginPageState extends State<LoginPage> {
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   labelText: 'Email',
+                  labelStyle:
+                      new TextStyle(color: Colors.black54, fontSize: 16.0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(40.0),
                   ),
@@ -63,16 +65,18 @@ class _LoginPageState extends State<LoginPage> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40.0)),
                   labelText: 'Password',
+                  labelStyle:
+                      new TextStyle(color: Colors.black54, fontSize: 16.0),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       _togglePasswordVisibility();
                     },
                     child: Icon(
                       _isHidePassword ? Icons.visibility_off : Icons.visibility,
-                      color: _isHidePassword ? Colors.white : Colors.white,
+                      color: _isHidePassword ? Colors.black54 : Colors.black54,
                     ),
                   ),
-                  filled: true,
+                  //filled: true,
                 ),
                 validator: (value) {
                   if (value.isEmpty) {

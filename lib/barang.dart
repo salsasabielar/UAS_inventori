@@ -6,10 +6,7 @@ import 'package:inventori/auth/sign_in.dart';
 import 'package:inventori/barang/screens/add_screen.dart';
 import 'package:inventori/barang/widgets/item_list.dart';
 import 'package:inventori/beranda.dart';
-import 'package:inventori/cari.dart';
-import 'package:inventori/form/formBarang.dart';
 import 'package:inventori/home.dart';
-import 'package:inventori/item.dart';
 import 'package:inventori/kategori.dart';
 
 class BarangPage extends StatelessWidget {
@@ -88,16 +85,7 @@ class BarangPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => KategoriPage()));
               },
             ),
-            ListTile(
-              leading: Icon(Icons.search),
-              title: Text("Cari"),
-              onTap: () {
-                // Change the applications state
-                print("Cari");
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SearchPage()));
-              },
-            ),
+
             Divider(
               height: 5.0,
               color: Colors.teal[600],
@@ -132,17 +120,7 @@ class BarangPage extends StatelessWidget {
           size: 35,
         ),
       ),
-      //   body: SafeArea(
-      //     child: Padding(
-      //       padding: const EdgeInsets.only(
-      //         left: 16.0,
-      //         right: 16.0,
-      //         bottom: 20.0,
-      //       ),
-      //       child: ItemList(),
-      //     ),
-      //   ),
-      // );
+
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
